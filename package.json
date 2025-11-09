@@ -1,0 +1,91 @@
+{
+  "name": "webull-auto",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx expo start",
+    "android": "npx expo start --android",
+    "ios": "npx expo start --ios",
+    "web": "npx expo start --web",
+    "eject": "expo eject",
+    "build:web": "npx expo export -p web",
+    "build:electron": "npm run build:web && electron-builder",
+    "build:electron:dir": "npm run build:web && electron-builder --dir",
+    "electron": "electron electron-main.js",
+    "electron:dev": "concurrently \"npm start\" \"wait-on http://localhost:8081 && electron electron-main.js\"",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build:web && electron-builder"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~3.2.3",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/masked-view": "0.1.11",
+    "@react-navigation/bottom-tabs": "^6.5.0",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/stack": "^6.3.0",
+    "expo": "^54.0.23",
+    "metro-react-native-babel-transformer": "^0.77.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "^0.82.1",
+    "react-native-gesture-handler": "~2.14.0",
+    "react-native-reanimated": "~3.6.0",
+    "react-native-safe-area-context": "^4.8.0",
+    "react-native-screens": "~3.29.0",
+    "react-native-svg": "14.0.0",
+    "react-native-web": "~0.19.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "concurrently": "^8.2.2",
+    "electron": "^39.1.1",
+    "electron-builder": "^24.6.4",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.webullauto.app",
+    "productName": "Webull Auto",
+    "main": "electron-main.js",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron-main.js",
+      "dist/**/*",
+      "web-build/**/*",
+      "build/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  },
+  "private": true
+}
