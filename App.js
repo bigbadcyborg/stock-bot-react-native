@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import LoginScreen from './components/LoginScreen';
 import PortfolioScreen from './components/PortfolioScreen';
 import MarketScreen from './components/MarketScreen';
 import SettingsScreen from './components/SettingsScreen';
@@ -12,6 +13,22 @@ const Tab = createBottomTabNavigator();
 
 // Main App Component with Navigation
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <View style={styles.appContainer}>
+        <LoginScreen onLoginSuccess={handleLoginSuccess} />
+      </View>
+    );
+  }
+
+  // Show main app after authentication
   return (
     <View style={styles.appContainer}>
       <NavigationContainer>
